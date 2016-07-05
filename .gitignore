@@ -1,0 +1,22 @@
+.gradle
+/local.properties
+.DS_Store # only needed under mac os
+/build
+/captures
+*.iml
+.idea
+*.apk
+*.ap_
+*.dex
+*.class
+bin/
+gen/
+out/
+proguard/
+*.log
+.navigation/
+*.iml
+.idea/workspace.xml
+*.jks
+ZoomeImageView/build
+app/build
