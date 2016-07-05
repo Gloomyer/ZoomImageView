@@ -1,4 +1,4 @@
-package com.gloomyer.zoomeimageview;
+package com.gloomyer.zoomimageview;
 
 import android.graphics.Bitmap;
 

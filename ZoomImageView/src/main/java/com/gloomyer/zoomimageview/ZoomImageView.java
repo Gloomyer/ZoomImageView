@@ -1,7 +1,8 @@
-package com.gloomyer.zoomeimageview;
+package com.gloomyer.zoomimageview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -73,6 +74,8 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
     private GestureDetector mGestureDetector;
     private boolean isScaleing;
     private List<MotionEvent> events;
+    private OnClickListener onClickListener;
+    private int arae_img_id = -1;
 
 
     public ZoomImageView(Context context) {
@@ -86,7 +89,6 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
     public ZoomImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        // Init
         setScaleType(ScaleType.MATRIX);
         mMatrix = new Matrix();
         mScaleGestureDetector = new ScaleGestureDetector(context, this);
@@ -108,11 +110,20 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
                 return true;
             }
 
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent e) {
+                if (onClickListener != null) {
+                    onClickListener.onClick(ZoomImageView.this);
+                    return true;
+                }
+                return false;
+            }
         });
         setOnTouchListener(this);
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         events = new ArrayList<>();
     }
+
 
     private class AutoScaleRunnable implements Runnable {
         /**
@@ -179,7 +190,7 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
     @Override
     public void onGlobalLayout() {
         log("执行了onGlobalLayout| NULL:" + (getDrawable() == null));
-        if (getDrawable() == null) return;
+        if (getDrawable() == null || getWidth() == 0 || getHeight() == 0) return;
 
         if (!isInit) {
             log("初始化完毕");
@@ -190,9 +201,8 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
             int imageH = getDrawable().getIntrinsicHeight(); // 图片高度
             int imageW = getDrawable().getIntrinsicWidth(); // 图片宽度
             float imageWeight = imageH * 1.0f / imageW;
-
             //如果当前屏幕高宽比 大于等于 图片高宽比,就缩放图片
-            if (screenWeight > imageWeight) {
+            if (screenWeight >= imageWeight) {
                 float scale = 1.0f;
                 //图片比当前View宽,但是比当前View矮
                 if (imageW > width && imageH < height) {
@@ -204,9 +214,15 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
                     scale = height * 1.0f / imageH; //根据高度缩放
                 }
 
-                //图片高宽都大于或者小于当前View,那么就根据最小的缩放值来缩放
-                if ((imageH > height && imageW > width) || (imageH < height && imageW < width)) {
-                    scale = Math.min(width * 1.0f / imageW, height * 1.0f / imageW);
+                //图片高宽都大于当前View,那么就根据最小的缩放值来缩放
+                if (imageH > height && imageW > width) {
+                    scale = Math.min(width * 1.0f / imageW, height * 1.0f / imageH);
+                    log("max scale:" + scale);
+                }
+
+                if (imageH < height && imageW < width) {
+                    scale = Math.min(width * 1.0f / imageW, height * 1.0f / imageH);
+                    log("min scale:" + scale);
                 }
 
                 /**
@@ -215,7 +231,6 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
                 mMinScale = scale;
                 mMidScale = mMinScale * 2;
                 mMaxScale = mMinScale * 4;
-
                 /**
                  * 把图片移动到中心点去
                  */
@@ -227,7 +242,6 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
                  */
                 mMatrix.postTranslate(dx, dy);
                 mMatrix.postScale(mMinScale, mMinScale, width / 2, height / 2);
-
             } else {
 
                 //将宽度缩放至屏幕比例缩放(长图,全图预览)
@@ -240,7 +254,8 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
                 mMinScale = mMaxScale / 4;
 
                 //因为是长图浏览,所以用最大的缩放比率去加载长图
-                mMatrix.postScale(mMaxScale, mMaxScale, 0, 0);
+                mMatrix.postScale(mMaxScale, mMaxScale, getWidth() / 2, getHeight() / 2);
+                mMatrix.postTranslate(0, 0);
             }
 
             setImageMatrix(mMatrix);
@@ -252,7 +267,7 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
     /**
      * 是否是Debug模式
      */
-    private static boolean IS_DEBUG = false;
+    private static boolean IS_DEBUG = true;
 
     /**
      * 打印日志
@@ -275,6 +290,7 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
     public void setImageForUrl(String url) {
         reSetState();
         new ImageDownLoad(getContext(), url)
+                .placeholder(arae_img_id)
                 .into(this)
                 .start();
     }
@@ -533,5 +549,31 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
         float[] values = new float[9];
         mMatrix.getValues(values);
         return values[Matrix.MSCALE_X];
+    }
+
+    @Override
+    public void setImageBitmap(Bitmap bm) {
+        reSetState();
+        super.setImageBitmap(bm);
+    }
+
+    @Override
+    public void setImageResource(int resId) {
+        reSetState();
+        super.setImageResource(resId);
+    }
+
+    @Override
+    public void setOnClickListener(OnClickListener l) {
+        this.onClickListener = l;
+    }
+
+    /**
+     * 设置加载中的占位图
+     *
+     * @param resID
+     */
+    public void placeholder(int resID) {
+        this.arae_img_id = resID;
     }
 }

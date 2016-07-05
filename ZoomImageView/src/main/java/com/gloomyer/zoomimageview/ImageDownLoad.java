@@ -1,10 +1,9 @@
-package com.gloomyer.zoomeimageview;
+package com.gloomyer.zoomimageview;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.ImageView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,8 +27,9 @@ public class ImageDownLoad implements Runnable {
     private URL url;
     private File cacheFile;
     private OnDownloadListener listener;
-    private ImageView imageView;
+    private ZoomImageView imageView;
     private Handler mHandler;
+    private int araeImgRes = -1;
 
     /**
      * 创建,并且开始下载一个图片
@@ -63,7 +63,7 @@ public class ImageDownLoad implements Runnable {
      * @param url 图片的URL
      */
     private void setImageDownloadPath(String url) {
-        String md5 = Utils.getMD5(url);
+        String md5 = com.gloomyer.zoomimageview.Utils.getMD5(url);
         cacheFile = new File(cacheFile, md5);
     }
 
@@ -96,6 +96,8 @@ public class ImageDownLoad implements Runnable {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
+                    if (araeImgRes > 0)
+                        imageView.setImageResource(araeImgRes);
                     listener.onStart();
                 }
             });
@@ -114,7 +116,7 @@ public class ImageDownLoad implements Runnable {
                 fos.write(butter, 0, len);
             }
 
-            final Bitmap bitmap = Utils.createBitmap(cacheFile.getAbsolutePath());
+            final Bitmap bitmap = com.gloomyer.zoomimageview.Utils.createBitmap(cacheFile.getAbsolutePath());
             // 下载完成,调用完成回调
             if (mHandler != null) {
                 mHandler.post(new Runnable() {
@@ -139,7 +141,7 @@ public class ImageDownLoad implements Runnable {
      * @param listener
      * @return
      */
-    public ImageDownLoad setOnDownloadListener(OnDownloadListener listener) {
+    public ImageDownLoad setOnDownloadListener(com.gloomyer.zoomimageview.OnDownloadListener listener) {
         if (listener == null)
             new NullPointerException("监听不能为空!");
 
@@ -153,10 +155,14 @@ public class ImageDownLoad implements Runnable {
      * @param iv 要设置图片的Imagev, 注意,这个ImageView不能设置tag
      * @return
      */
-    public ImageDownLoad into(ImageView iv) {
+    public ImageDownLoad into(ZoomImageView iv) {
         this.imageView = iv;
         iv.setTag(tag);
         return this;
     }
 
+    public ImageDownLoad placeholder(int araeImgRes) {
+        this.araeImgRes = araeImgRes;
+        return this;
+    }
 }

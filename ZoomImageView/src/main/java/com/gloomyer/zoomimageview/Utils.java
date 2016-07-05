@@ -1,4 +1,4 @@
-package com.gloomyer.zoomeimageview;
+package com.gloomyer.zoomimageview;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -67,5 +67,18 @@ public class Utils {
      */
     public static Bitmap createBitmap(String path) {
         return BitmapFactory.decodeFile(path);
+    }
+
+    private static int screenHeight;
+
+    public static int getScreenHeight(Context context) {
+        if (screenHeight > 0)
+            return screenHeight;
+        WindowManager wm = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(outMetrics);
+        screenHeight = outMetrics.heightPixels;
+        return screenHeight;
     }
 }

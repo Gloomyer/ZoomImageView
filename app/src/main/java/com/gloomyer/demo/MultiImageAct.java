@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.gloomyer.zoomeimageview.ZoomImageView;
+import com.gloomyer.zoomimageview.ZoomImageView;
 
 /**
  * Created by Gloomy on 16/7/5.

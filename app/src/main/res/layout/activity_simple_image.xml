@@ -46,7 +46,7 @@
         android:layout_height="0.5dp"
         android:background="#222" />
 
-    <com.gloomyer.zoomeimageview.ZoomImageView
+    <com.gloomyer.zoomimageview.ZoomImageView
         android:id="@+id/ziv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
