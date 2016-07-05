@@ -28,7 +28,7 @@ app是Demo
 
 如果需要使用这个图片框架,并且你的后台服务器不支持缩放图片.
 
-那么你将需要重写ZoomingImageView库中的Utils类里面的createBitmap()方法.
+那么你将需要重写ZoomImageView库中的Utils类里面的createBitmap()方法.
 
 因为图片下载完成,把下载完成的图片加载至内存中是由这个方法来干的.
 
