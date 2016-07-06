@@ -92,13 +92,16 @@ public class ImageDownLoad implements Runnable {
         /**
          * 调用开始回调
          */
-        if (mHandler != null && listener != null)
+        if (mHandler != null)
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (araeImgRes > 0)
+                    if (araeImgRes > 0 && imageView != null) {
                         imageView.setImageResource(araeImgRes);
-                    listener.onStart();
+                        imageView.setTag(tag);
+                    }
+                    if (listener != null)
+                        listener.onStart();
                 }
             });
 
@@ -122,11 +125,11 @@ public class ImageDownLoad implements Runnable {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (listener != null)
-                            listener.onFinish(bitmap);
-
                         if (imageView != null && tag.equals(((String) imageView.getTag())))
                             imageView.setImageBitmap(bitmap);
+
+                        if (listener != null)
+                            listener.onFinish(bitmap);
                     }
                 });
             }
