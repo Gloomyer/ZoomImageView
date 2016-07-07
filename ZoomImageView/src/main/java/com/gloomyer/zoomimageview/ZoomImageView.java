@@ -254,8 +254,8 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
                 mMinScale = mMaxScale / 4;
 
                 //因为是长图浏览,所以用最大的缩放比率去加载长图
-                mMatrix.postScale(mMaxScale, mMaxScale, getWidth() / 2, getHeight() / 2);
-                mMatrix.postTranslate(0, 0);
+                //mMatrix.postTranslate(0, 0);
+                mMatrix.postScale(mMaxScale, mMaxScale, 0, 0);
             }
 
             setImageMatrix(mMatrix);
@@ -290,8 +290,8 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
     public void setImageForUrl(String url) {
         reSetState();
         new ImageDownLoad(getContext(), url)
-                .placeholder(arae_img_id)
                 .into(this)
+                .placeholder(arae_img_id)
                 .start();
     }
 
@@ -577,3 +577,4 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
         this.arae_img_id = resID;
     }
 }
+
