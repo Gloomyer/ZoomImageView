@@ -267,7 +267,7 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
     /**
      * 是否是Debug模式
      */
-    private static boolean IS_DEBUG = true;
+    private static boolean IS_DEBUG = false;
 
     /**
      * 打印日志
@@ -277,22 +277,6 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
     public static void log(String value) {
         if (IS_DEBUG)
             Log.w(TAG, value);
-    }
-
-    /**
-     * 设置图片URL,自动下载并加载
-     * 请注意:
-     * 这里的图片下载并加载,未使用缩放!会用原图加载.
-     * 请注意OOM异常!
-     *
-     * @param url 图片URL
-     */
-    public void setImageForUrl(String url) {
-        reSetState();
-        new ImageDownLoad(getContext(), url)
-                .into(this)
-                .placeholder(arae_img_id)
-                .start();
     }
 
     /**
@@ -564,6 +548,12 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
     }
 
     @Override
+    public void setImageDrawable(Drawable drawable) {
+        reSetState();
+        super.setImageDrawable(drawable);
+    }
+
+    @Override
     public void setOnClickListener(OnClickListener l) {
         this.onClickListener = l;
     }
@@ -576,5 +566,6 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
     public void placeholder(int resID) {
         this.arae_img_id = resID;
     }
+
 }
 

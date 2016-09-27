@@ -5,6 +5,28 @@
     android:background="#fff"
     android:orientation="vertical">
 
+    <RadioGroup
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Glide加载" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Picasso加载" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ImageLoader加载" />
+    </RadioGroup>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
