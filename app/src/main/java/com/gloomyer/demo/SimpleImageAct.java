@@ -40,6 +40,7 @@ public class SimpleImageAct extends Activity {
     }
 
     public void loadSrc1(View v) {
+        ziv.placeholder(R.mipmap.ic_launcher);
         String url = "http://qximg.lightplan.cc/2016/02/20/1455947314173671.jpg";
         RadioButton child = (RadioButton) group.getChildAt(0);
         if (child.isChecked()) {
@@ -67,6 +68,7 @@ public class SimpleImageAct extends Activity {
     }
 
     public void loadSrc2(View v) {
+        ziv.placeholder(R.mipmap.ic_launcher);
         String url = "http://qximg.lightplan.cc/2016/03/1/1456833663958973.jpg";
         RadioButton child = (RadioButton) group.getChildAt(0);
         if (child.isChecked()) {
@@ -94,6 +96,7 @@ public class SimpleImageAct extends Activity {
     }
 
     public void loadSrc3(View v) {
+        ziv.placeholder(R.mipmap.ic_launcher);
         String url = "http://qximg.lightplan.cc/2016/05/10/1462863397324242.gif";
         RadioButton child = (RadioButton) group.getChildAt(0);
         if (child.isChecked()) {

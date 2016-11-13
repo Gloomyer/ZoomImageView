@@ -89,7 +89,7 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
     public ZoomImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        setScaleType(ScaleType.MATRIX);
+        //setScaleType(ScaleType.MATRIX);
         mMatrix = new Matrix();
         mScaleGestureDetector = new ScaleGestureDetector(context, this);
         mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
@@ -189,6 +189,11 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
 
     @Override
     public void onGlobalLayout() {
+        if(arae_img_id != -1){
+            arae_img_id = -1;
+            return;
+        }
+        setScaleType(ScaleType.MATRIX);
         log("执行了onGlobalLayout| NULL:" + (getDrawable() == null));
         if (getDrawable() == null || getWidth() == 0 || getHeight() == 0) return;
 
@@ -565,6 +570,8 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
      */
     public void placeholder(int resID) {
         this.arae_img_id = resID;
+        setScaleType(ScaleType.CENTER);
+        setImageResource(resID);
     }
 
 }

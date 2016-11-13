@@ -51,7 +51,7 @@ public class MultiImageAct extends Activity {
             ZoomImageView ziv = new ZoomImageView(MultiImageAct.this);
             ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
+            ziv.placeholder(R.mipmap.ic_launcher);
             ziv.reSetState();
             Glide.with(MultiImageAct.this)
                     .load(imgs[position])

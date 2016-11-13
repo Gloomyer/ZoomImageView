@@ -41,6 +41,19 @@ ImageLoader:不支持动图,长图会模糊!
   
 推荐图片加载框架:Glide  
   
+1.3版本:
+修复占位图位图放大bug
+调用如下:
+```java
+ziv = (ZoomImageView) findViewById(R.id.ziv);
+ziv.placeholder(R.mipmap.ic_launcher);
+Glide.with(this)
+.load(url)
+.asBitmap()
+.placeholder(R.mipmap.ic_launcher)
+.into(ziv);
+```
+
 ---
 如果发现什么Bug,欢迎提交给我!
 
