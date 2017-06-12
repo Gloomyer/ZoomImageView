@@ -7,14 +7,20 @@
     android:orientation="vertical">
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:onClick="click1"
-        android:text="            单图大图浏览              " />
+        android:text="单图大图浏览 " />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:onClick="click2"
         android:text="多图(ViewPager)大图浏览" />
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:onClick="click3"
+        android:text="过场动画方式" />
 </LinearLayout>

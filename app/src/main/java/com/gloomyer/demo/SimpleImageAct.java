@@ -28,6 +28,12 @@ public class SimpleImageAct extends Activity {
         setContentView(R.layout.activity_simple_image);
 
         ziv = (ZoomImageView) findViewById(R.id.ziv);
+        ziv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SimpleImageAct.this.finish();
+            }
+        });
         group = (RadioGroup) findViewById(R.id.group);
         RadioButton child = (RadioButton) group.getChildAt(0);
         child.setChecked(true);

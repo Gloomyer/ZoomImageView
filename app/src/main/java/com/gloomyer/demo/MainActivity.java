@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.gloomyer.demo.anim.Anim1Act;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -21,6 +23,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void click2(View v) {
         startActivity(new Intent(this, MultiImageAct.class));
+    }
+
+    public void click3(View v) {
+        startActivity(new Intent(this, Anim1Act.class));
     }
 
 }

@@ -57,6 +57,12 @@ public class MultiImageAct extends Activity {
                     .load(imgs[position])
                     .into(ziv);
             //ziv.setImageForUrl(imgs[position]);
+            ziv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MultiImageAct.this.finish();
+                }
+            });
             container.addView(ziv, layoutParams);
             return ziv;
         }
